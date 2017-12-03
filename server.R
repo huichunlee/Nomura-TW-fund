@@ -281,5 +281,20 @@ function(input, output, session) {
   })
   
   
-  
+  # output$ui <- renderUI({
+  #   if (is.null(input$input_type))
+  #     return()
+  #   
+  #   # Depending on input$input_type, we'll generate a different
+  #   # UI component and send it to the client.
+  #   switch(input$input_type,
+  #          "達人自選" = selectInput("dynamic", "Dynamic",
+  #                                              choices = c("野村鴻運" = "option1",
+  #                                                          "Option 2" = "option2"),
+  #                                              selected = c("野村中小", "option2"),
+  #                                              multiple = TRUE
+  #          )
+  #          
+  # )
+  # })
 }
