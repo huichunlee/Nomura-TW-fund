@@ -21,14 +21,35 @@ data2xts <- function(x){
 
 # loading data from Nomura funds
 
-Nomura_Price <- read.csv("C:/Users/leeam/Nomura-TW-fund/Nomura_Price.csv"
+Nomura_Price <- read.csv("C:/Users/leeam/Nomura-TW-fund/Nomura_Price2.csv"
                               , header=TRUE)
+Nomura_Return_All <- read.csv("C:/Users/leeam/Nomura-TW-fund/Nomura_Return_All.csv"
+                              , header=TRUE)
+Nomura_Shape <- read.csv("C:/Users/leeam/Nomura-TW-fund/Nomura_Sharp.csv"
+                         , header=TRUE)
+index_all <- read.csv("C:/Users/leeam/Nomura-TW-fund/index.csv"
+                      , header=TRUE)
 # call fuction to convert to xts object and set NA = 0
 
 Nomura_Price <- data2xts(Nomura_Price)
+Nomura_Return_All <- data2xts(Nomura_Return_All)
+Nomura_Shape <- data2xts(Nomura_Shape)
+index_all <- data2xts(index_all)
 
 # covert % return to numeric return
+Nomura_Return_All <- Nomura_Return_All / 100
+index_all <- index_all / 100
 
+charts.PerformanceSummary(Nomura_Return_All, Rf = 0, main = NULL, geometric = TRUE,
+                          methods = "StdDev", width = 0, event.labels = NULL, ylog = FALSE,
+                          wealth.index = FALSE, gap = 12, begin = c("first", "axis"),
+                          legend.loc = "topleft", p = 0.95)
+
+#table.AnnualizedReturns(Nomura_Return_All, scale = 252, Rf = 0, geometric = TRUE,
+#                        digits = 4)
+result = table.AnnualizedReturns(Nomura_Return_All[,1:5], scale = 252, Rf = 0, geometric = TRUE,
+                                 digits = 4)
+textplot(result, na.blank=TRUE, numeric.dollar=FALSE)
 
 ID=sample(colnames(Nomura_Price),1);ID
 y0=returns(Nomura_Price[,ID])
